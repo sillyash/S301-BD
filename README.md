@@ -1,9 +1,9 @@
 # S301-BD
 
-## Script de création
+## Scripts de création
 
-### [Looping](./MEA-SR.txt)
-### [MySQL](./creation.sql)
+- #### [Looping](./MEA-SR.txt)
+- #### [MySQL](./creation.sql)
 
 ## [Script de population](./population.sql)
 
