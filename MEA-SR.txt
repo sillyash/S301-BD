@@ -1,0 +1,164 @@
+CREATE TABLE Groupe(
+   idGroupe INT,
+   nomGroupe VARCHAR(50) ,
+   PRIMARY KEY(idGroupe)
+);
+
+CREATE TABLE Proposition(
+   idProposition INT,
+   titreProposition VARCHAR(50) ,
+   descProposition VARCHAR(50) ,
+   popularite INT NOT NULL,
+   PRIMARY KEY(idProposition)
+);
+
+CREATE TABLE Theme(
+   idTheme INT,
+   nomTheme VARCHAR(50) ,
+   PRIMARY KEY(idTheme)
+);
+
+CREATE TABLE Role(
+   idRole INT,
+   nomRole VARCHAR(50) ,
+   PRIMARY KEY(idRole)
+);
+
+CREATE TABLE Membre(
+   idMembre INT,
+   roleMembre VARCHAR(50) ,
+   idProposition INT NOT NULL,
+   PRIMARY KEY(idMembre),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+);
+
+CREATE TABLE Budget(
+   idBudget INT,
+   limiteBudgetGlobal INT,
+   evalProposition INT,
+   idProposition INT NOT NULL,
+   PRIMARY KEY(idBudget),
+   UNIQUE(idProposition),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+);
+
+CREATE TABLE Commentaire(
+   idCommentaire INT,
+   descCommentaire VARCHAR(50) ,
+   dateCommentaire DATETIME,
+   idMembre INT NOT NULL,
+   idProposition INT NOT NULL,
+   PRIMARY KEY(idCommentaire),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+);
+
+CREATE TABLE Reaction(
+   idReaction INT,
+   typeReaction INT,
+   PRIMARY KEY(idReaction)
+);
+
+CREATE TABLE Scrutin(
+   idScrutin INT,
+   dureeDiscussion INT,
+   dureeScrutin INT,
+   natureScrutin VARCHAR(50) ,
+   resultatScrutin VARCHAR(50) ,
+   idProposition INT NOT NULL,
+   PRIMARY KEY(idScrutin),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+);
+
+CREATE TABLE Signalement(
+   idSignalement INT,
+   nbSignalements INT NOT NULL,
+   idMembre INT NOT NULL,
+   idProposition INT NOT NULL,
+   idCommentaire INT NOT NULL,
+   PRIMARY KEY(idSignalement),
+   UNIQUE(idMembre),
+   UNIQUE(idProposition),
+   UNIQUE(idCommentaire),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
+   FOREIGN KEY(idCommentaire) REFERENCES Commentaire(idCommentaire)
+);
+
+CREATE TABLE Notification(
+   idNotification INT,
+   typeNotification VARCHAR(50) ,
+   messageNotification VARCHAR(50) ,
+   etatNotification VARCHAR(50) ,
+   frequenceNotification VARCHAR(50) ,
+   PRIMARY KEY(idNotification)
+);
+
+CREATE TABLE Internaute(
+   idInternaute INT,
+   nomInter VARCHAR(50) ,
+   prenomInter VARCHAR(50) ,
+   adrInter VARCHAR(50) ,
+   emailInter VARCHAR(50) ,
+   loginInter VARCHAR(50) ,
+   idMembre INT NOT NULL,
+   PRIMARY KEY(idInternaute),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre)
+);
+
+CREATE TABLE A_pour_theme(
+   idProposition INT,
+   idTheme INT,
+   PRIMARY KEY(idProposition, idTheme),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
+   FOREIGN KEY(idTheme) REFERENCES Theme(idTheme)
+);
+
+CREATE TABLE Fait_partie_de(
+   idGroupe INT,
+   idMembre INT,
+   idRole INT NOT NULL,
+   PRIMARY KEY(idGroupe, idMembre),
+   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre)
+);
+
+CREATE TABLE A_pour_reaction(
+   idProposition INT,
+   idReaction INT,
+   PRIMARY KEY(idProposition, idReaction),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
+   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction)
+);
+
+CREATE TABLE Reagit(
+   idMembre INT,
+   idReaction INT,
+   PRIMARY KEY(idMembre, idReaction),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre),
+   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction)
+);
+
+CREATE TABLE Concerne_la_notification(
+   idProposition INT,
+   idNotification INT,
+   PRIMARY KEY(idProposition, idNotification),
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
+   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification)
+);
+
+CREATE TABLE Est_envoye_au_membre(
+   idMembre INT,
+   idNotification INT,
+   PRIMARY KEY(idMembre, idNotification),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre),
+   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification)
+);
+
+CREATE TABLE Vote(
+   idMembre INT,
+   idScrutin INT,
+   PRIMARY KEY(idMembre, idScrutin),
+   FOREIGN KEY(idMembre) REFERENCES Membre(idMembre),
+   FOREIGN KEY(idScrutin) REFERENCES Scrutin(idScrutin)
+);
