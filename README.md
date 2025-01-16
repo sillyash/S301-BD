@@ -24,3 +24,9 @@
 - [ ] Proposition
   - [ ] Suppression de la proposition : supprimer tous les commentaires et réactions
 
+
+## Annexes
+
+![MCD](./MEA.jpg)
+
+![SR](./SR.jpg)
