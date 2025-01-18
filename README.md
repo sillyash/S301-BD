@@ -26,6 +26,8 @@
   - [ ] Suppression de la réaction : décrémenter / incrémenter popularité
 - [ ] Proposition
   - [ ] Suppression de la proposition : supprimer tous les commentaires et réactions
+- [ ] Vote
+  - [ ] Double vote : empêcher un utilisateur de voter plusieurs fois dans le même scrutin
 
 
 ## Annexes
