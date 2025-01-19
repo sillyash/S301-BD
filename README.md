@@ -17,6 +17,7 @@
 - Cardinalite Proposition <-> Budget a revoir
 - Internaute devrait avoir un mot de passe (hash)
 - Proposition devrait avoir une date
+- Un membre ne peut faire qu'une proposition ?
 
 ### [Vues](./vues.sql)
 
