@@ -9,6 +9,15 @@
 
 ## TODO
 
+### Remarques
+
+- La table Membre ne doit pas avoir d'attribut role
+- La table Membre est abigue (avec Internaute et par rapport au Role)
+- La table Internaute a un attribut idMembre ??
+- Cardinalite Proposition <-> Budget a revoir
+- Internaute devrait avoir un mot de passe (hash)
+- Proposition devrait avoir une date
+
 ### [Vues](./vues.sql)
 
 - [ ] Groupes d'un utilisateur
