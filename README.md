@@ -11,13 +11,13 @@
 
 ### Remarques
 
-- La table Membre ne doit pas avoir d'attribut role
-- La table Membre est abigue (avec Internaute et par rapport au Role)
-- La table Internaute a un attribut idMembre ??
-- Cardinalite Proposition <-> Budget a revoir
-- Internaute devrait avoir un mot de passe (hash)
-- Proposition devrait avoir une date
-- Un membre ne peut faire qu'une proposition ?
+- [x] ~~La table Membre ne doit pas avoir d'attribut role~~
+- [x] ~~La table Membre est abigue (avec Internaute et par rapport au Role)~~
+- [x] ~~La table Internaute a un attribut idMembre ??~~
+- [ ] Cardinalite Proposition <-> Budget a revoir
+- [ ] Internaute devrait avoir un mot de passe (hash)
+- [ ] Proposition devrait avoir une date
+- [ ] Un membre ne peut faire qu'une proposition ?
 
 ### [Vues](./vues.sql)
 
