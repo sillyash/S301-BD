@@ -1,43 +1,43 @@
 CREATE TABLE Groupe(
    idGroupe INT AUTO_INCREMENT,
-   nomGroupe VARCHAR(50) ,
-   PRIMARY KEY(idGroupe)
+   nomGroupe VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(idGroupe),
+   UNIQUE(nomGroupe)
 );
 
 CREATE TABLE Theme(
    idTheme INT AUTO_INCREMENT,
-   nomTheme VARCHAR(50) ,
-   PRIMARY KEY(idTheme)
+   nomTheme VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(idTheme),
+   UNIQUE(nomTheme)
 );
 
 CREATE TABLE Internaute(
-   idInternaute INT AUTO_INCREMENT,
-   nomInter VARCHAR(50) ,
-   prenomInter VARCHAR(50) ,
-   emailInter VARCHAR(50) ,
    loginInter VARCHAR(50) ,
+   nomInter VARCHAR(50)  NOT NULL,
+   prenomInter VARCHAR(50)  NOT NULL,
+   emailInter VARCHAR(50)  NOT NULL,
    mdpInter VARCHAR(90)  NOT NULL,
    adrInter VARCHAR(50) ,
-   PRIMARY KEY(idInternaute)
+   PRIMARY KEY(loginInter)
 );
 
 CREATE TABLE Budget(
    idBudget INT AUTO_INCREMENT,
-   limiteBudgetGlobal INT,
-   evalProposition INT,
+   limiteBudgetGlobal INT NOT NULL,
    PRIMARY KEY(idBudget)
 );
 
 CREATE TABLE Reaction(
    idReaction INT AUTO_INCREMENT,
-   typeReaction INT,
+   typeReaction INT NOT NULL,
    PRIMARY KEY(idReaction)
 );
 
 CREATE TABLE Notification(
    idNotification INT AUTO_INCREMENT,
-   typeNotification VARCHAR(50) ,
-   messageNotification VARCHAR(50) ,
+   typeNotification VARCHAR(50)  NOT NULL,
+   messageNotification VARCHAR(50)  NOT NULL,
    etatNotification VARCHAR(50) ,
    frequenceNotification VARCHAR(50) ,
    PRIMARY KEY(idNotification)
@@ -52,8 +52,8 @@ CREATE TABLE Role(
 
 CREATE TABLE Proposition(
    idProposition INT AUTO_INCREMENT,
-   titreProposition VARCHAR(50) ,
-   descProposition VARCHAR(50) ,
+   titreProposition VARCHAR(200)  NOT NULL,
+   descProposition VARCHAR(1000) ,
    popularite INT NOT NULL,
    dateProp DATETIME NOT NULL,
    idBudget INT NOT NULL,
@@ -63,20 +63,20 @@ CREATE TABLE Proposition(
 
 CREATE TABLE Commentaire(
    idCommentaire INT AUTO_INCREMENT,
-   descCommentaire VARCHAR(50) ,
-   dateCommentaire DATETIME,
-   idInternaute INT NOT NULL,
+   descCommentaire VARCHAR(300)  NOT NULL,
+   dateCommentaire DATETIME NOT NULL,
+   loginInter VARCHAR(50)  NOT NULL,
    idProposition INT NOT NULL,
    PRIMARY KEY(idCommentaire),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
 );
 
 CREATE TABLE Scrutin(
    idScrutin INT AUTO_INCREMENT,
-   dureeDiscussion INT,
-   dureeScrutin INT,
-   natureScrutin VARCHAR(50) ,
+   dureeDiscussion INT NOT NULL,
+   dureeScrutin INT NOT NULL,
+   natureScrutin VARCHAR(50)  NOT NULL,
    resultatScrutin VARCHAR(50) ,
    idProposition INT NOT NULL,
    PRIMARY KEY(idScrutin),
@@ -86,14 +86,14 @@ CREATE TABLE Scrutin(
 CREATE TABLE Signalement(
    idSignalement INT AUTO_INCREMENT,
    nbSignalements INT NOT NULL,
-   idInternaute INT NOT NULL,
+   loginInter VARCHAR(50)  NOT NULL,
    idProposition INT NOT NULL,
    idCommentaire INT NOT NULL,
    PRIMARY KEY(idSignalement),
-   UNIQUE(idInternaute),
+   UNIQUE(loginInter),
    UNIQUE(idProposition),
    UNIQUE(idCommentaire),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
    FOREIGN KEY(idCommentaire) REFERENCES Commentaire(idCommentaire)
 );
@@ -108,11 +108,11 @@ CREATE TABLE A_pour_theme(
 
 CREATE TABLE Fait_partie_de(
    idGroupe INT,
-   idInternaute INT,
+   loginInter VARCHAR(50) ,
    idRole INT,
-   PRIMARY KEY(idGroupe, idInternaute, idRole),
+   PRIMARY KEY(idGroupe, loginInter, idRole),
    FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idRole) REFERENCES Role(idRole)
 );
 
@@ -125,10 +125,10 @@ CREATE TABLE A_pour_reaction(
 );
 
 CREATE TABLE Reagit(
-   idInternaute INT,
+   loginInter VARCHAR(50) ,
    idReaction INT,
-   PRIMARY KEY(idInternaute, idReaction),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   PRIMARY KEY(loginInter, idReaction),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction)
 );
 
@@ -141,25 +141,25 @@ CREATE TABLE Concerne_la_notification(
 );
 
 CREATE TABLE Est_envoye_au_membre(
-   idInternaute INT,
+   loginInter VARCHAR(50) ,
    idNotification INT,
-   PRIMARY KEY(idInternaute, idNotification),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   PRIMARY KEY(loginInter, idNotification),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idNotification) REFERENCES Notification(idNotification)
 );
 
 CREATE TABLE Propose(
    idProposition INT,
-   idInternaute INT,
-   PRIMARY KEY(idProposition, idInternaute),
+   loginInter VARCHAR(50) ,
+   PRIMARY KEY(idProposition, loginInter),
    FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter)
 );
 
 CREATE TABLE Vote(
-   idInternaute INT,
+   loginInter VARCHAR(50) ,
    idScrutin INT,
-   PRIMARY KEY(idInternaute, idScrutin),
-   FOREIGN KEY(idInternaute) REFERENCES Internaute(idInternaute),
+   PRIMARY KEY(loginInter, idScrutin),
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idScrutin) REFERENCES Scrutin(idScrutin)
 );
