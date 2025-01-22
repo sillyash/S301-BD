@@ -1,17 +1,17 @@
 CREATE TABLE Groupe(
-   idGroupe INT,
+   idGroupe INT AUTO_INCREMENT,
    nomGroupe VARCHAR(50) ,
    PRIMARY KEY(idGroupe)
 );
 
 CREATE TABLE Theme(
-   idTheme INT,
+   idTheme INT AUTO_INCREMENT,
    nomTheme VARCHAR(50) ,
    PRIMARY KEY(idTheme)
 );
 
 CREATE TABLE Internaute(
-   idInternaute INT,
+   idInternaute INT AUTO_INCREMENT,
    nomInter VARCHAR(50) ,
    prenomInter VARCHAR(50) ,
    emailInter VARCHAR(50) ,
@@ -22,20 +22,20 @@ CREATE TABLE Internaute(
 );
 
 CREATE TABLE Budget(
-   idBudget INT,
+   idBudget INT AUTO_INCREMENT,
    limiteBudgetGlobal INT,
    evalProposition INT,
    PRIMARY KEY(idBudget)
 );
 
 CREATE TABLE Reaction(
-   idReaction INT,
+   idReaction INT AUTO_INCREMENT,
    typeReaction INT,
    PRIMARY KEY(idReaction)
 );
 
 CREATE TABLE Notification(
-   idNotification INT,
+   idNotification INT AUTO_INCREMENT,
    typeNotification VARCHAR(50) ,
    messageNotification VARCHAR(50) ,
    etatNotification VARCHAR(50) ,
@@ -44,14 +44,14 @@ CREATE TABLE Notification(
 );
 
 CREATE TABLE Role(
-   idRole INT,
+   idRole INT AUTO_INCREMENT,
    nomRole VARCHAR(50)  NOT NULL,
    PRIMARY KEY(idRole),
    UNIQUE(nomRole)
 );
 
 CREATE TABLE Proposition(
-   idProposition INT,
+   idProposition INT AUTO_INCREMENT,
    titreProposition VARCHAR(50) ,
    descProposition VARCHAR(50) ,
    popularite INT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE Proposition(
 );
 
 CREATE TABLE Commentaire(
-   idCommentaire INT,
+   idCommentaire INT AUTO_INCREMENT,
    descCommentaire VARCHAR(50) ,
    dateCommentaire DATETIME,
    idInternaute INT NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE Commentaire(
 );
 
 CREATE TABLE Scrutin(
-   idScrutin INT,
+   idScrutin INT AUTO_INCREMENT,
    dureeDiscussion INT,
    dureeScrutin INT,
    natureScrutin VARCHAR(50) ,
@@ -84,7 +84,7 @@ CREATE TABLE Scrutin(
 );
 
 CREATE TABLE Signalement(
-   idSignalement INT,
+   idSignalement INT AUTO_INCREMENT,
    nbSignalements INT NOT NULL,
    idInternaute INT NOT NULL,
    idProposition INT NOT NULL,
