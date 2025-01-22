@@ -74,8 +74,8 @@ CREATE TABLE Proposition(
    idProposition INT AUTO_INCREMENT,
    titreProposition VARCHAR(200)  NOT NULL,
    descProposition VARCHAR(1000) ,
-   popularite INT NOT NULL,
-   dateProp DATETIME NOT NULL,
+   popularite INT NOT NULL DEFAULT '0',
+   dateProp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
    idBudget INT NOT NULL,
    PRIMARY KEY(idProposition),
    FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
