@@ -21,11 +21,11 @@
 
 ### [Vues](./vues.sql)
 
-- [ ] Groupes d'un utilisateur
-- [ ] Propositions populaires
-- [ ] Propositions récentes
-- [ ] Propositions d'un utilisateur
-- [ ] Membres d'un groupe
+- [x] Groupes d'un utilisateur
+- [x] Propositions populaires
+- [x] Propositions récentes
+- [x] Propositions d'un utilisateur
+- [x] Membres d'un groupe
 
 
 ### [Triggers](./triggers.sql)
