@@ -1,93 +1,108 @@
 DELIMITER //
-
--- Trigger pour incrémenter ou décrémenter la popularité d'une proposition en fonction d'une réaction
-CREATE TRIGGER UpvoteDownvoteReaction
-AFTER INSERT ON Reagit
+CREATE OR REPLACE TRIGGER IncrementerPopularite
+AFTER INSERT ON A_pour_reaction
 FOR EACH ROW
 BEGIN
-    DECLARE type_reaction INT;
-    SELECT typeReaction INTO type_reaction
-    FROM Reaction
+    DECLARE typeReaction INT;
+
+    -- Récupérer le type de réaction
+    SELECT typeReaction INTO typeReaction 
+    FROM Reaction 
     WHERE idReaction = NEW.idReaction;
 
-    IF type_reaction = 1 THEN -- Upvote
+    -- Si le type de réaction est un Upvote (typeReaction = 1)
+    IF typeReaction = 1 THEN
         UPDATE Proposition
         SET popularite = popularite + 1
-        WHERE idProposition = (
-            SELECT idProposition
-            FROM A_pour_reaction
-            WHERE idReaction = NEW.idReaction
-        );
-    ELSEIF type_reaction = 2 THEN -- Downvote
-        UPDATE Proposition
-        SET popularite = popularite - 1
-        WHERE idProposition = (
-            SELECT idProposition
-            FROM A_pour_reaction
-            WHERE idReaction = NEW.idReaction
-        );
+        WHERE idProposition = NEW.idProposition;
     END IF;
-END;
-//
-DELIMITER ; 
-
-DELIMITER //
--- Trigger pour mettre à jour la popularité lors de la suppression d'une réaction
-CREATE TRIGGER updateDelProp
-AFTER DELETE ON Reagit
-FOR EACH ROW
-BEGIN
-    DECLARE type_reaction INT;
-    SELECT typeReaction INTO type_reaction
-    FROM Reaction
-    WHERE idReaction = OLD.idReaction;
-
-    IF type_reaction = 1 THEN -- Upvote
-        UPDATE Proposition
-        SET popularite = popularite - 1
-        WHERE idProposition = (
-            SELECT idProposition
-            FROM A_pour_reaction
-            WHERE idReaction = OLD.idReaction
-        );
-    ELSEIF type_reaction = 2 THEN -- Downvote
-        UPDATE Proposition
-        SET popularite = popularite + 1
-        WHERE idProposition = (
-            SELECT idProposition
-            FROM A_pour_reaction
-            WHERE idReaction = OLD.idReaction
-        );
-    END IF;
-END;
+END
 //
 DELIMITER ;
 
--- Trigger pour supprimer les commentaires et réactions liés à une proposition supprimée
-CREATE TRIGGER DeleteProposition
+
+DELIMITER //
+CREATE TRIGGER DecrementerPopularite
+AFTER INSERT ON A_pour_reaction
+FOR EACH ROW
+BEGIN
+    DECLARE typeReaction INT;
+
+    -- Récupérer le type de réaction
+    SELECT typeReaction INTO typeReaction 
+    FROM Reaction 
+    WHERE idReaction = NEW.idReaction;
+
+    -- Si le type de réaction est un Downvote (typeReaction = 2)
+    IF typeReaction = 2 THEN
+        UPDATE Proposition
+        SET popularite = popularite - 1
+        WHERE idProposition = NEW.idProposition;
+    END IF;
+END
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER AjusterPopularite
+AFTER DELETE ON A_pour_reaction
+FOR EACH ROW
+BEGIN
+    DECLARE typeReaction INT;
+
+    -- Récupérer le type de réaction supprimée
+    SELECT typeReaction INTO typeReaction 
+    FROM Reaction 
+    WHERE idReaction = OLD.idReaction;
+
+    -- Ajuster la popularité en fonction du type de réaction
+    IF typeReaction = 1 THEN -- Suppression d'un Upvote
+        UPDATE Proposition
+        SET popularite = popularite - 1
+        WHERE idProposition = OLD.idProposition;
+    ELSEIF typeReaction = 2 THEN -- Suppression d'un Downvote
+        UPDATE Proposition
+        SET popularite = popularite + 1
+        WHERE idProposition = OLD.idProposition;
+    END IF;
+END
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER SupprimerCommentairesEtReactions
 BEFORE DELETE ON Proposition
 FOR EACH ROW
 BEGIN
+    -- Supprimer tous les commentaires associés à la proposition
     DELETE FROM Commentaire WHERE idProposition = OLD.idProposition;
-    DELETE FROM A_pour_reaction WHERE idProposition = OLD.idProposition;
-    DELETE FROM Concerne_la_notification WHERE idProposition = OLD.idProposition;
-    DELETE FROM Propose WHERE idProposition = OLD.idProposition;
-END$$
 
--- Trigger pour empêcher un double vote dans un scrutin
-CREATE TRIGGER before_insert_vote
+    -- Supprimer toutes les réactions associées à la proposition
+    DELETE FROM A_pour_reaction WHERE idProposition = OLD.idProposition;
+END
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER EmpecherDoubleVote
 BEFORE INSERT ON Vote
 FOR EACH ROW
 BEGIN
+    -- Vérifier si l'utilisateur a déjà voté dans ce scrutin
     IF EXISTS (
         SELECT 1
         FROM Vote
-        WHERE loginInter = NEW.loginInter
-        AND idScrutin = NEW.idScrutin
+        WHERE loginInter = NEW.loginInter AND idScrutin = NEW.idScrutin
     ) THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Un utilisateur ne peut pas voter deux fois dans le même scrutin.';
+        SET MESSAGE_TEXT = 'Un utilisateur ne peut pas voter plusieurs fois dans le même scrutin.';
     END IF;
-END;
+END
 //
 DELIMITER ;
+
+
+
