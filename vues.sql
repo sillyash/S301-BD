@@ -36,7 +36,7 @@ INNER JOIN Internaute I ON FPD.loginInter = I.loginInter
 INNER JOIN Role R ON FPD.idRole = R.idRole;
 
 CREATE OR REPLACE VIEW BudgetsParThematique AS
-SELECT g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal, SUM(p.popularite) AS PopulariteTotale
+SELECT p.idProposition, g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal, SUM(p.popularite) AS PopulariteTotale
 FROM Groupe g
 INNER JOIN Theme t ON g.idGroupe = t.idGroupe
 INNER JOIN Proposition p ON p.idProposition = (SELECT idProposition FROM A_pour_theme WHERE idTheme = t.idTheme)
