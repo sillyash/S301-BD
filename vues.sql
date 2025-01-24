@@ -35,20 +35,12 @@ INNER JOIN Groupe G ON FPD.idGroupe = G.idGroupe
 INNER JOIN Internaute I ON FPD.loginInter = I.loginInter 
 INNER JOIN Role R ON FPD.idRole = R.idRole;
 
-CREATE OR REPLACE VIEW VueBudgetsParThematique AS
+CREATE OR REPLACE VIEW BudgetsParThematique AS
 SELECT g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal, SUM(p.popularite) AS PopulariteTotale
 FROM Groupe g
 INNER JOIN Theme t ON g.idGroupe = t.idGroupe
 INNER JOIN Proposition p ON p.idProposition = (SELECT idProposition FROM A_pour_theme WHERE idTheme = t.idTheme)
 INNER JOIN Budget b ON p.idBudget = b.idBudget
 GROUP BY g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal;
-
-CREATE OR REPLACE VIEW VuePropositionsValidees AS
-SELECT g.nomGroupe, t.nomTheme, p.titreProposition, p.descProposition, p.popularite, p.validee
-FROM Groupe g
-INNER JOIN Theme t ON g.idGroupe = t.idGroupe
-INNER JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
-INNER JOIN Proposition p ON apt.idProposition = p.idProposition
-WHERE p.validee = TRUE;
 
 
