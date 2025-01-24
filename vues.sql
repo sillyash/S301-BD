@@ -17,6 +17,14 @@ JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
 JOIN Proposition p ON apt.idProposition = p.idProposition
 ORDER BY p.popularite DESC;
 
+CREATE OR REPLACE VIEW PropositionsValidees AS
+SELECTg.nomGroupe, t.nomTheme,p.titreProposition, p.descProposition, p.popularite AS Popularite, p.validee
+FROM Groupe g
+INNER JOIN Theme t ON g.idGroupe = t.idGroupe
+INNER JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
+INNER JOIN Proposition p ON apt.idProposition = p.idProposition
+WHERE p.validee = TRUE;
+
 CREATE OR REPLACE VIEW GroupesUtilisateur AS
 SELECT FPD.loginInter, G.idGroupe, G.nomGroupe, R.nomRole 
 FROM Fait_partie_de FPD 
