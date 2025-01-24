@@ -79,6 +79,7 @@ CREATE TABLE Proposition(
    popularite INT NOT NULL DEFAULT '0',
    dateProp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
    idBudget INT NOT NULL,
+   validee BOOLEAN NOT NULL,
    PRIMARY KEY(idProposition),
    FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
 );
