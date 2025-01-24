@@ -10,7 +10,7 @@ ORDER BY P.popularite DESC;
 */
 
 CREATE OR REPLACE VIEW PropositionsPopulaires AS
-SELECT P.idProposition, g.nomGroupe, t.nomTheme, p.titreProposition, p.descProposition, p.popularite
+SELECT p.idProposition, g.nomGroupe, t.nomTheme, p.titreProposition, p.descProposition, p.popularite
 FROM Groupe g
 JOIN Theme t ON g.idGroupe = t.idGroupe
 JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
