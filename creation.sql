@@ -29,6 +29,7 @@ CREATE TABLE Theme(
    idTheme INT AUTO_INCREMENT,
    nomTheme VARCHAR(50)  NOT NULL,
    idGroupe INT NOT NULL,
+   budgetTheme INT NOT NULL
    PRIMARY KEY(idTheme),
    UNIQUE(nomTheme),
    FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
