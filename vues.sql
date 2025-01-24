@@ -18,7 +18,7 @@ JOIN Proposition p ON apt.idProposition = p.idProposition
 ORDER BY p.popularite DESC;
 
 CREATE OR REPLACE VIEW PropositionsValidees AS
-SELECTg.nomGroupe, t.nomTheme,p.titreProposition, p.descProposition, p.popularite AS Popularite, p.validee
+SELECT p.idProposition, g.nomGroupe, t.nomTheme,p.titreProposition, p.descProposition, p.popularite AS Popularite, p.validee
 FROM Groupe g
 INNER JOIN Theme t ON g.idGroupe = t.idGroupe
 INNER JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
