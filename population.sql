@@ -47,10 +47,10 @@ INSERT INTO Role (nomRole) VALUES
 ('Utilisateur');
 
 -- Insertions pour la table Proposition
-INSERT INTO Proposition (titreProposition, descProposition, idBudget, validee) VALUES
-('Plan de plantation urbaine', 'Augmenter les espaces verts dans les zones urbaines.', 1, TRUE),
-('Modernisation des écoles', 'Fournir des équipements technologiques aux établissements.', 2, FALSE),
-('Campagne anti-tabac', 'Sensibiliser aux dangers du tabac.', 3, TRUE);
+INSERT INTO Proposition (titreProposition, descProposition, idBudget, popularite, validee) VALUES
+('Plan de plantation urbaine', 'Augmenter les espaces verts dans les zones urbaines.', 1, 5, TRUE),
+('Modernisation des écoles', 'Fournir des équipements technologiques aux établissements.', 2, 4, FALSE),
+('Campagne anti-tabac', 'Sensibiliser aux dangers du tabac.', 3, 3, TRUE);
 
 -- Insertions pour la table Commentaire
 INSERT INTO Commentaire (descCommentaire, dateCommentaire, loginInter, idProposition) VALUES
