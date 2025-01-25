@@ -52,7 +52,7 @@ INNER JOIN Budget b ON p.idBudget = b.idBudget
 GROUP BY g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal;
 
 
-// A ajouter dans la vrai base ;
+// A ajouter dans la vraie base ;
 
 CREATE OR REPLACE VIEW PropositionsDetaillees AS
 SELECT 
