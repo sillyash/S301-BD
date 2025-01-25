@@ -52,3 +52,21 @@ INNER JOIN Budget b ON p.idBudget = b.idBudget
 GROUP BY g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal;
 
 
+// A ajouter dans la vrai base ;
+
+CREATE OR REPLACE VIEW PropositionsDetaillees AS
+SELECT 
+    p.idProposition,
+    p.titreProposition,
+    p.descProposition,
+    p.popularite,
+    p.idBudget,
+    t.nomTheme,
+    g.nomGroupe,
+    b.limiteBudgetGlobal AS cout
+FROM Proposition p
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+JOIN Groupe g ON t.idGroupe = g.idGroupe
+JOIN Budget b ON p.idBudget = b.idBudget
+ORDER BY p.popularite DESC;
