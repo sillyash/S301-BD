@@ -1,5 +1,5 @@
 CREATE OR REPLACE VIEW PropositionsRecentes AS
-SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.validee
+SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.validee, P.idBudget
 FROM Proposition P
 ORDER BY P.idProposition DESC;
 
