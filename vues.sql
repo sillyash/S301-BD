@@ -4,7 +4,7 @@ FROM Proposition P
 ORDER BY P.idProposition DESC;
 
 /*CREATE OR REPLACE VIEW PropositionsPopulaires AS
-SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.validee
+SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.validee, P.idBudget
 FROM Proposition P
 ORDER BY P.popularite DESC;
 */
