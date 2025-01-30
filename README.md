@@ -11,13 +11,16 @@
 
 ### Remarques
 
-- [x] ~~La table Membre ne doit pas avoir d'attribut role~~
-- [x] ~~La table Membre est abigue (avec Internaute et par rapport au Role)~~
-- [x] ~~La table Internaute a un attribut idMembre ??~~
-- [x] ~~Cardinalite Proposition <-> Budget a revoir~~
-- [x] ~~Internaute devrait avoir un mot de passe (hash)~~
-- [x] ~~Proposition devrait avoir une date~~
-- [x] ~~Un membre ne peut faire qu'une proposition ?~~
+- [x] La table Membre ne doit pas avoir d'attribut role
+- [x] La table Membre est abigue (avec Internaute et par rapport au Role)
+- [x] La table Internaute a un attribut idMembre ??
+- [x] Cardinalite Proposition <-> Budget a revoir
+- [x] Internaute devrait avoir un mot de passe (hash)
+- [x] Proposition devrait avoir une date
+- [x] Un membre ne peut faire qu'une proposition ?
+- [ ] Ajouter une pp a la table groupe
+- [ ] Un budget concerne un groupe (Budget -> #idGroupe -> Groupe)
+- [ ] Ajouter un montant a Proposition (et Trigger qui checke le montant avec celui du budget)
 
 ### [Vues](./vues.sql)
 
