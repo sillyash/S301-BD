@@ -42,6 +42,11 @@
 - [ ] Vote
   - [ ] Double vote : empêcher un utilisateur de voter plusieurs fois dans le même scrutin
 
+### [Procédures / Fonctions](./functions.sql)
+
+- [ ] Création d'un groupe (pour ajouter ensuite l'utilisateur dans le groupe avec le role Admin)
+- [ ] Gestion des EVENTS MySQL pour les votes ?
+- [ ] Calcul du résultat des votes
 
 ## Annexes
 
