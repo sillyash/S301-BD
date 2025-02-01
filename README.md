@@ -18,9 +18,9 @@
 - [x] Internaute devrait avoir un mot de passe (hash)
 - [x] Proposition devrait avoir une date
 - [x] Un membre ne peut faire qu'une proposition ?
-- [ ] Ajouter une pp a la table groupe
-- [ ] Un budget concerne un groupe (Budget -> #idGroupe -> Groupe)
-- [ ] Ajouter un montant a Proposition (et Trigger qui checke le montant avec celui du budget)
+- [x] Ajouter une pp a la table groupe
+- [x] Un budget concerne un groupe (Budget -> #idGroupe -> Groupe)
+- [x] Ajouter un montant a Proposition (et Trigger qui checke le montant avec celui du budget)
 
 ### [Vues](./vues.sql)
 
