@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS Proposition;
 CREATE TABLE Groupe(
    idGroupe INT AUTO_INCREMENT,
    nomGroupe VARCHAR(50)  NOT NULL,
+   ppGroupe BLOB,
    PRIMARY KEY(idGroupe),
    UNIQUE(nomGroupe)
 );
@@ -48,7 +49,10 @@ CREATE TABLE Internaute(
 CREATE TABLE Budget(
    idBudget INT AUTO_INCREMENT,
    limiteBudgetGlobal INT NOT NULL,
-   PRIMARY KEY(idBudget)
+   idGroupe INT NOT NULL,
+   PRIMARY KEY(idBudget),
+   UNIQUE(idGroupe),
+   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
 );
 
 CREATE TABLE Reaction(
@@ -75,12 +79,13 @@ CREATE TABLE Role(
 
 CREATE TABLE Proposition(
    idProposition INT AUTO_INCREMENT,
-   titreProposition VARCHAR(200)  NOT NULL,
    descProposition VARCHAR(1000) ,
-   popularite INT NOT NULL DEFAULT '0',
-   dateProp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   idBudget INT NOT NULL,
+   titreProposition VARCHAR(200)  NOT NULL,
+   popularite INT NOT NULL,
+   dateProp DATETIME NOT NULL,
    validee BOOLEAN NOT NULL,
+   coutProp INT NOT NULL,
+   idBudget INT NOT NULL,
    PRIMARY KEY(idProposition),
    FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
 );
