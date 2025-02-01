@@ -1,118 +1,84 @@
--- Insertions pour la table Groupe
+-- Insertion des groupes
 INSERT INTO Groupe (nomGroupe) VALUES
-('Développement Durable'),
-('Éducation'),
-('Santé'),
-('Culture');
+('Groupe Écologie'),
+('Groupe Éducation'),
+('Groupe Santé'),
+('Groupe Technologie'),
+('Groupe Urbanisme');
 
--- Insertions pour la table Theme
-INSERT INTO Theme (nomTheme, idGroupe) VALUES
-('Energies Renouvelables', 1),
-('Sensibilisation Écologique', 1),
-('Réforme Scolaire', 2),
-('Accès à l’Éducation', 2),
-('Prévention Sanitaire', 3),
-('Bien-être Mental', 3),
-('Art Contemporain', 4),
-('Patrimoine Historique', 4);
+-- Insertion des thèmes
+INSERT INTO Theme (nomTheme, idGroupe, budgetTheme) VALUES
+('Énergies renouvelables', 1, 50000),
+('Réduction des déchets', 1, 30000),
+('Réforme scolaire', 2, 70000);
 
--- Insertions pour la table Internaute
+-- Insertion des internautes
 INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter, adrInter) VALUES
-('user123', 'Dupont', 'Marie', 'marie.dupont@example.com', 'password123', '12 rue des Lilas'),
-('user456', 'Martin', 'Paul', 'paul.martin@example.com', 'securepwd456', '34 avenue Victor Hugo'),
-('user789', 'Lemoine', 'Sophie', 'sophie.lemoine@example.com', 's0ph1epwd!', '56 boulevard Haussmann');
+('jdoe', 'Doe', 'John', 'jdoe@example.com', 'pass123', '123 Rue Principale'),
+('asmith', 'Smith', 'Alice', 'asmith@example.com', 'secure456', '456 Avenue Centrale');
 
--- Insertions pour la table Budget
-INSERT INTO Budget (limiteBudgetGlobal) VALUES
-(100000),
-(50000),
-(75000);
+-- Insertion des budgets
+INSERT INTO Budget (limiteBudgetGlobal, idGroupe) VALUES
+(100000, 1),
+(150000, 2),
+(250000, 3);
 
--- Insertions pour la table Reaction
-INSERT INTO Reaction (typeReaction) VALUES
-(1), -- "J'aime"
-(2), -- "Je n'aime pas"
-(3); -- "Indifférent"
-
--- Insertions pour la table Notification
-INSERT INTO Notification (typeNotification, messageNotification, etatNotification, frequenceNotification) VALUES
-('Alerte', 'Nouvelle proposition disponible', 'Non lue', 'Hebdomadaire'),
-('Rappel', 'Scrutin en cours', 'Non lue', 'Quotidienne'),
-('Info', 'Nouvelle réaction sur votre proposition', 'Lue', 'Instantanée');
-
--- Insertions pour la table Role
+-- Insertion des rôles
 INSERT INTO Role (nomRole) VALUES
-('Admin'),
+('Membre'),
 ('Modérateur'),
-('Utilisateur');
+('Administrateur');
 
--- Insertions pour la table Proposition
-INSERT INTO Proposition (titreProposition, descProposition, idBudget, popularite, validee) VALUES
-('Plan de plantation urbaine', 'Augmenter les espaces verts dans les zones urbaines.', 1, 5, TRUE),
-('Modernisation des écoles', 'Fournir des équipements technologiques aux établissements.', 2, 4, FALSE),
-('Campagne anti-tabac', 'Sensibiliser aux dangers du tabac.', 3, 3, TRUE);
+-- Insertion des réactions
+INSERT INTO Reaction (typeReaction) VALUES
+(1), (2), (3);
 
--- Insertions pour la table Commentaire
+-- Insertion des notifications
+INSERT INTO Notification (typeNotification, messageNotification, etatNotification, frequenceNotification) VALUES
+('Alerte', 'Nouvelle proposition publiée', 'Non lu', 'Quotidienne');
+
+-- Insertion des propositions
+INSERT INTO Proposition (descProposition, titreProposition, popularite, dateProp, validee, coutProp, idBudget) VALUES
+('Mise en place de panneaux solaires dans les écoles', 'Énergie solaire scolaire', 85, '2025-02-01 10:00:00', TRUE, 45000, 1),
+('Développement de pistes cyclables en ville', 'Mobilité douce', 72, '2025-02-03 15:30:00', TRUE, 60000, 2),
+('Création d’un espace de coworking public', 'Innovation et travail', 90, '2025-02-05 09:45:00', TRUE, 80000, 3);
+
+-- Insertion des commentaires
 INSERT INTO Commentaire (descCommentaire, dateCommentaire, loginInter, idProposition) VALUES
-('Très bonne idée !', '2025-01-20 10:15:00', 'user123', 1),
-('Je pense que cela pourrait coûter cher.', '2025-01-21 12:30:00', 'user456', 2),
-('C’est une priorité.', '2025-01-22 14:00:00', 'user789', 3);
+('Très bonne idée pour la transition énergétique !', '2025-02-02 12:00:00', 'jdoe', 1);
 
--- Insertions pour la table Scrutin
+-- Insertion des scrutins
 INSERT INTO Scrutin (dureeDiscussion, dureeScrutin, natureScrutin, resultatScrutin, idProposition) VALUES
-(14, 7, 'Vote public', 'Adopté', 1),
-(10, 5, 'Vote privé', NULL, 2);
+(10, 5, 'Vote majoritaire', 'En cours', 1);
 
--- Insertions pour la table Signalement
-INSERT INTO Signalement (nbSignalements, loginInter, idProposition, idCommentaire) VALUES
-(2, 'user123', 2, 1),
-(1, 'user456', 3, 2);
-
--- Insertions pour la table A_pour_theme
-INSERT INTO A_pour_theme (idProposition, idTheme) VALUES
-(1, 1),
-(2, 3),
-(3, 5);
-
--- Insertions pour la table Fait_partie_de
-INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES
-(1, 'user123', 3),
-(2, 'user456', 2),
-(3, 'user789', 3);
-
--- Insertions pour la table A_pour_reaction
-INSERT INTO A_pour_reaction (idProposition, idReaction) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
-
--- Insertions pour la table Reagit
-INSERT INTO Reagit (loginInter, idReaction) VALUES
-('user123', 1),
-('user456', 2),
-('user789', 3);
-
--- Insertions pour la table Concerne_la_notification
-INSERT INTO Concerne_la_notification (idProposition, idNotification) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
-
--- Insertions pour la table Est_envoye_au_membre
-INSERT INTO Est_envoye_au_membre (loginInter, idNotification) VALUES
-('user123', 1),
-('user456', 2),
-('user789', 3);
-
--- Insertions pour la table Propose
-INSERT INTO Propose (idProposition, loginInter) VALUES
-(1, 'user123'),
-(2, 'user456'),
-(3, 'user789');
-
--- Insertions pour la table Vote
+-- Insertion des votes
 INSERT INTO Vote (loginInter, idScrutin) VALUES
-('user123', 1),
-('user456', 1),
-('user789', 2);
+('jdoe', 1);
 
+-- Insertion des signalements
+INSERT INTO Signalement (nbSignalements, loginInter, idProposition, idCommentaire) VALUES
+(1, 'asmith', 1, 1);
+
+-- Associations diverses
+INSERT INTO A_pour_theme (idProposition, idTheme) VALUES
+(1, 1);
+
+INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES
+(1, 'jdoe', 1);
+
+INSERT INTO A_pour_reaction (idProposition, idReaction) VALUES
+(1, 1);
+
+INSERT INTO Reagit (loginInter, idReaction) VALUES
+('asmith', 1);
+
+INSERT INTO Concerne_la_notification (idProposition, idNotification) VALUES
+(1, 1);
+
+INSERT INTO Est_envoye_au_membre (loginInter, idNotification) VALUES
+('jdoe', 1);
+
+INSERT INTO Propose (idProposition, loginInter) VALUES
+(1, 'jdoe'),
+(2, 'asmith'),
+(3, 'jdoe');
