@@ -44,9 +44,9 @@
 
 ### [Procédures / Fonctions](./functions.sql)
 
-- [ ] Création d'un groupe (pour ajouter ensuite l'utilisateur dans le groupe avec le role Admin)
-- [ ] Gestion des EVENTS MySQL pour les votes ?
-- [ ] Calcul du résultat des votes
+- [x] Création d'un groupe (pour ajouter ensuite l'utilisateur dans le groupe avec le role Admin)
+- [x] Gestion des EVENTS MySQL pour les votes ?
+- [x] Calcul du résultat des votes
 
 ## Annexes
 
