@@ -29,11 +29,9 @@ CREATE TABLE Groupe(
 CREATE TABLE Theme(
    idTheme INT AUTO_INCREMENT,
    nomTheme VARCHAR(50)  NOT NULL,
-   idGroupe INT NOT NULL,
    budgetTheme INT NOT NULL,
    PRIMARY KEY(idTheme),
-   UNIQUE(nomTheme),
-   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
+   UNIQUE(nomTheme)
 );
 
 CREATE TABLE Internaute(
@@ -43,6 +41,7 @@ CREATE TABLE Internaute(
    emailInter VARCHAR(50)  NOT NULL,
    mdpInter VARCHAR(90)  NOT NULL,
    adrInter VARCHAR(50) ,
+   compteValide VARCHAR(50)  NOT NULL DEFAULT False,
    PRIMARY KEY(loginInter)
 );
 
@@ -85,6 +84,7 @@ CREATE TABLE Proposition(
    dateProp DATETIME NOT NULL,
    validee BOOLEAN NOT NULL,
    coutProp INT NOT NULL,
+   confirmee BOOLEAN DEFAULT FALSE,
    idBudget INT NOT NULL,
    PRIMARY KEY(idProposition),
    FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
