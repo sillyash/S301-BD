@@ -7,10 +7,10 @@ INSERT INTO Groupe (nomGroupe) VALUES
 ('Groupe Urbanisme');
 
 -- Insertion des thèmes
-INSERT INTO Theme (nomTheme, idGroupe, budgetTheme) VALUES
-('Énergies renouvelables', 1, 50000),
-('Réduction des déchets', 1, 30000),
-('Réforme scolaire', 2, 70000);
+INSERT INTO Theme (nomTheme, budgetTheme) VALUES
+('Énergies renouvelables', 50000),
+('Réduction des déchets', 30000),
+('Réforme scolaire', 70000);
 
 -- Insertion des internautes
 INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter, adrInter) VALUES
