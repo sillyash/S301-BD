@@ -41,7 +41,7 @@ CREATE TABLE Internaute(
    emailInter VARCHAR(50)  NOT NULL,
    mdpInter VARCHAR(90)  NOT NULL,
    adrInter VARCHAR(50) ,
-   compteValide VARCHAR(50)  NOT NULL DEFAULT False,
+   compteValide BOOLEAN NOT NULL DEFAULT False,
    PRIMARY KEY(loginInter)
 );
 
