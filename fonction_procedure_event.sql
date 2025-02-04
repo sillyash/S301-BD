@@ -5,22 +5,36 @@ CREATE PROCEDURE addUserToGroup(
     IN login VARCHAR(50)
 )
 BEGIN
-    DECLARE groupeID INT;
-    DECLARE adminRoleID INT;
-    
+    DECLARE groupeID INT DEFAULT NULL;
+    DECLARE adminRoleID INT DEFAULT NULL;
+    DECLARE errorMessage VARCHAR(255);
+
     -- Vérifier si le rôle 'Administrateur' existe
-    SELECT idRole INTO adminRoleID FROM Role WHERE nomRole = 'Admin' LIMIT 1;
+    SELECT idRole INTO adminRoleID
+    FROM Role
+    WHERE nomRole = 'Admin'
+    LIMIT 1;
+
     IF adminRoleID IS NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le rôle Admin n"existe pas';
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Le rôle Admin n''existe pas';
     END IF;
 
+    -- Vérifier si le groupe existe
     SELECT idGroupe INTO groupeID
     FROM Groupe
     WHERE nomGroupe = nomGrp
     LIMIT 1;
-    
+
+    IF groupeID IS NULL THEN
+        SET errorMessage = CONCAT('Le groupe ', nomGrp, ' n''existe pas'); 
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = errorMessage;
+    END IF;
+
     -- Ajouter l'utilisateur au groupe en tant qu'admin
-    INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES (groupeID, login, adminRoleID);
+    INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) 
+    VALUES (groupeID, login, adminRoleID);
 END $$
 DELIMITER ;
 
