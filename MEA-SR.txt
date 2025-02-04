@@ -1,17 +1,20 @@
 CREATE TABLE Groupe(
    idGroupe INT AUTO_INCREMENT,
    nomGroupe VARCHAR(50)  NOT NULL,
+   descGroupe VARCHAR(200)  NOT NULL,
+   couleurGroupe VARCHAR(10)  NOT NULL,
+   ppGroupe BLOB,
    PRIMARY KEY(idGroupe),
-   UNIQUE(nomGroupe)
+   UNIQUE(nomGroupe),
+   UNIQUE(descGroupe)
 );
 
 CREATE TABLE Theme(
    idTheme INT AUTO_INCREMENT,
    nomTheme VARCHAR(50)  NOT NULL,
-   idGroupe INT NOT NULL,
+   budgetTheme INT NOT NULL,
    PRIMARY KEY(idTheme),
-   UNIQUE(nomTheme),
-   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
+   UNIQUE(nomTheme)
 );
 
 CREATE TABLE Internaute(
@@ -21,13 +24,17 @@ CREATE TABLE Internaute(
    emailInter VARCHAR(50)  NOT NULL,
    mdpInter VARCHAR(90)  NOT NULL,
    adrInter VARCHAR(50) ,
+   compteValide BOOLEAN NOT NULL DEFAULT False,
    PRIMARY KEY(loginInter)
 );
 
 CREATE TABLE Budget(
    idBudget INT AUTO_INCREMENT,
    limiteBudgetGlobal INT NOT NULL,
-   PRIMARY KEY(idBudget)
+   idGroupe INT NOT NULL,
+   PRIMARY KEY(idBudget),
+   UNIQUE(idGroupe),
+   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
 );
 
 CREATE TABLE Reaction(
@@ -54,12 +61,14 @@ CREATE TABLE Role(
 
 CREATE TABLE Proposition(
    idProposition INT AUTO_INCREMENT,
-   titreProposition VARCHAR(200)  NOT NULL,
    descProposition VARCHAR(1000) ,
+   titreProposition VARCHAR(200)  NOT NULL,
    popularite INT NOT NULL,
    dateProp DATETIME NOT NULL,
-   idBudget INT NOT NULL,
    validee BOOLEAN NOT NULL,
+   coutProp INT NOT NULL,
+   confirmee BOOLEAN DEFAULT FALSE,
+   idBudget INT NOT NULL,
    PRIMARY KEY(idProposition),
    FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
 );

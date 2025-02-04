@@ -21,9 +21,12 @@ DROP TABLE IF EXISTS Proposition;
 CREATE TABLE Groupe(
    idGroupe INT AUTO_INCREMENT,
    nomGroupe VARCHAR(50)  NOT NULL,
+   descGroupe VARCHAR(200)  NOT NULL,
+   couleurGroupe VARCHAR(10)  NOT NULL,
    ppGroupe BLOB,
    PRIMARY KEY(idGroupe),
-   UNIQUE(nomGroupe)
+   UNIQUE(nomGroupe),
+   UNIQUE(descGroupe)
 );
 
 CREATE TABLE Theme(
