@@ -191,6 +191,7 @@ CREATE TABLE Propose(
 CREATE TABLE Vote(
    loginInter VARCHAR(50) ,
    idScrutin INT,
+   valeurVote TINYINT NOT NULL,
    PRIMARY KEY(loginInter, idScrutin),
    FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
    FOREIGN KEY(idScrutin) REFERENCES Scrutin(idScrutin)
