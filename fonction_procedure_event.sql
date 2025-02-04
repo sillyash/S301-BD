@@ -1,8 +1,8 @@
 -- 1. Procédure pour créer un groupe et ajouter un utilisateur en tant qu'admin
 DELIMITER $$
-CREATE PROCEDURE CreerGroupe(
-    IN nomGroupe VARCHAR(50),
-    IN loginInter VARCHAR(50)
+CREATE PROCEDURE addUserToGroup(
+    IN nomGrp VARCHAR(50),
+    IN login VARCHAR(50)
 )
 BEGIN
     DECLARE groupeID INT;
@@ -11,15 +11,16 @@ BEGIN
     -- Vérifier si le rôle 'Administrateur' existe
     SELECT idRole INTO adminRoleID FROM Role WHERE nomRole = 'Admin' LIMIT 1;
     IF adminRoleID IS NULL THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le rôle Admin n\'existe pas';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le rôle Admin n"existe pas';
     END IF;
-    
-    -- Création du groupe
-    INSERT INTO Groupe (nomGroupe) VALUES (nomGroupe);
-    SET groupeID = LAST_INSERT_ID();
+
+    SELECT idGroupe INTO groupeID
+    FROM Groupe
+    WHERE nomGroupe = nomGrp
+    LIMIT 1;
     
     -- Ajouter l'utilisateur au groupe en tant qu'admin
-    INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES (groupeID, loginInter, adminRoleID);
+    INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES (groupeID, login, adminRoleID);
 END $$
 DELIMITER ;
 
