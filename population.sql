@@ -13,9 +13,9 @@ INSERT INTO Theme (nomTheme, budgetTheme) VALUES
 ('Réforme scolaire', 70000);
 
 -- Insertion des internautes
-INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter, adrInter) VALUES
-('jdoe', 'Doe', 'John', 'jdoe@example.com', 'pass123', '123 Rue Principale'),
-('asmith', 'Smith', 'Alice', 'asmith@example.com', 'secure456', '456 Avenue Centrale');
+INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter, adrInter, compteValide) VALUES
+('jdoe', 'Doe', 'John', 'jdoe@example.com', 'pass123', '123 Rue Principale', 1),
+('asmith', 'Smith', 'Alice', 'asmith@example.com', 'secure456', '456 Avenue Centrale', 1);
 
 -- Insertion des budgets
 INSERT INTO Budget (limiteBudgetGlobal, idGroupe) VALUES
@@ -27,7 +27,7 @@ INSERT INTO Budget (limiteBudgetGlobal, idGroupe) VALUES
 INSERT INTO Role (nomRole) VALUES
 ('Membre'),
 ('Modérateur'),
-('Administrateur');
+('Admin');
 
 -- Insertion des réactions
 INSERT INTO Reaction (typeReaction) VALUES
