@@ -1,10 +1,10 @@
 -- Insertion des groupes
-INSERT INTO Groupe (nomGroupe) VALUES
-('Groupe Écologie'),
-('Groupe Éducation'),
-('Groupe Santé'),
-('Groupe Technologie'),
-('Groupe Urbanisme');
+INSERT INTO Groupe (nomGroupe, descGroupe, couleurGroupe) VALUES
+('Groupe Écologie', 'Le velo c cool', '#1f5e30'),
+('Groupe Éducation', 'Les maths c cool', '#855258'),
+('Groupe Santé', 'Le cancer c cool', '#538a82'),
+('Groupe Technologie', 'Le code c cool', '#1f3c5e'),
+('Groupe Urbanisme', 'Les arbres c cool', '#523c41');
 
 -- Insertion des thèmes
 INSERT INTO Theme (nomTheme, budgetTheme) VALUES
@@ -52,8 +52,8 @@ INSERT INTO Scrutin (dureeDiscussion, dureeScrutin, natureScrutin, resultatScrut
 (10, 5, 'Vote majoritaire', 'En cours', 1);
 
 -- Insertion des votes
-INSERT INTO Vote (loginInter, idScrutin) VALUES
-('jdoe', 1);
+INSERT INTO Vote (loginInter, idScrutin, valeurVote) VALUES
+('jdoe', 1, 1);
 
 -- Insertion des signalements
 INSERT INTO Signalement (nbSignalements, loginInter, idProposition, idCommentaire) VALUES
