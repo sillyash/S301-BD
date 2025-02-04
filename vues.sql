@@ -59,6 +59,7 @@ SELECT
     p.popularite,
     p.idBudget,
     t.nomTheme,
+    g.idGroupe,
     g.nomGroupe,
     b.limiteBudgetGlobal AS cout
 FROM Proposition p
