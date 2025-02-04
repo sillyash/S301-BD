@@ -51,9 +51,6 @@ INNER JOIN Proposition p ON p.idProposition = (SELECT idProposition FROM A_pour_
 INNER JOIN Budget b ON p.idBudget = b.idBudget
 GROUP BY g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal;
 
-
-// A ajouter dans la vraie base ;
-
 CREATE OR REPLACE VIEW PropositionsDetaillees AS
 SELECT 
     p.idProposition,
@@ -67,6 +64,46 @@ SELECT
 FROM Proposition p
 JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
 JOIN Theme t ON apt.idTheme = t.idTheme
-JOIN Groupe g ON t.idGroupe = g.idGroupe
 JOIN Budget b ON p.idBudget = b.idBudget
+JOIN Groupe g ON b.idGroupe = g.idGroupe
 ORDER BY p.popularite DESC;
+
+CREATE OR REPLACE VIEW PropositionsGroupe AS
+SELECT 
+    g.idGroupe,
+    p.idProposition,
+    p.titreProposition,
+    p.descProposition,
+    p.popularite,
+    p.idBudget,
+    t.nomTheme,
+    b.limiteBudgetGlobal
+FROM Groupe g
+JOIN Budget b ON b.idGroupe = g.idGroupe
+JOIN Proposition p ON p.idBudget = b.idBudget
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+ORDER BY p.idProposition DESC;
+
+CREATE OR REPLACE VIEW ScrutinsGroupe AS
+SELECT 
+    g.idGroupe,
+    s.idScrutin,
+    s.natureScrutin,
+    s.dureeScrutin,
+    s.dureeDiscussion,
+    s.resultatScrutin,
+    s.idProposition,
+    p.titreProposition,
+    p.descProposition,
+    p.popularite,
+    p.idBudget,
+    t.nomTheme,
+    b.limiteBudgetGlobal
+FROM Scrutin s
+JOIN Proposition p ON s.idProposition = p.idProposition
+JOIN Budget b ON p.idBudget = b.idBudget
+JOIN Groupe g ON b.idGroupe = g.idGroupe
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+ORDER BY g.idGroupe, s.idScrutin DESC;
