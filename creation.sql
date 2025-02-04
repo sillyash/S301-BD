@@ -1,7 +1,5 @@
 DROP TABLE IF EXISTS Vote;
 DROP TABLE IF EXISTS Propose;
-DROP TABLE IF EXISTS Theme;
-DROP TABLE IF EXISTS Groupe;
 DROP TABLE IF EXISTS Est_envoye_au_membre;
 DROP TABLE IF EXISTS Concerne_la_notification;
 DROP TABLE IF EXISTS Reagit;
@@ -9,14 +7,16 @@ DROP TABLE IF EXISTS A_pour_reaction;
 DROP TABLE IF EXISTS Fait_partie_de;
 DROP TABLE IF EXISTS A_pour_theme;
 DROP TABLE IF EXISTS Signalement;
+DROP TABLE IF EXISTS Theme;
 DROP TABLE IF EXISTS Scrutin;
 DROP TABLE IF EXISTS Commentaire;
 DROP TABLE IF EXISTS Role;
 DROP TABLE IF EXISTS Notification;
 DROP TABLE IF EXISTS Reaction;
-DROP TABLE IF EXISTS Budget;
 DROP TABLE IF EXISTS Internaute;
 DROP TABLE IF EXISTS Proposition;
+DROP TABLE IF EXISTS Budget;
+DROP TABLE IF EXISTS Groupe;
 
 CREATE TABLE Groupe(
    idGroupe INT AUTO_INCREMENT,
@@ -54,7 +54,7 @@ CREATE TABLE Budget(
    idGroupe INT NOT NULL,
    PRIMARY KEY(idBudget),
    UNIQUE(idGroupe),
-   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe)
+   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe) ON DELETE CASCADE
 );
 
 CREATE TABLE Reaction(
@@ -90,7 +90,7 @@ CREATE TABLE Proposition(
    confirmee BOOLEAN DEFAULT FALSE,
    idBudget INT NOT NULL,
    PRIMARY KEY(idProposition),
-   FOREIGN KEY(idBudget) REFERENCES Budget(idBudget)
+   FOREIGN KEY(idBudget) REFERENCES Budget(idBudget) ON DELETE CASCADE
 );
 
 CREATE TABLE Commentaire(
@@ -100,8 +100,8 @@ CREATE TABLE Commentaire(
    loginInter VARCHAR(50)  NOT NULL,
    idProposition INT NOT NULL,
    PRIMARY KEY(idCommentaire),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE
 );
 
 CREATE TABLE Scrutin(
@@ -112,7 +112,7 @@ CREATE TABLE Scrutin(
    resultatScrutin VARCHAR(50) ,
    idProposition INT NOT NULL,
    PRIMARY KEY(idScrutin),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition)
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE
 );
 
 CREATE TABLE Signalement(
@@ -125,17 +125,17 @@ CREATE TABLE Signalement(
    UNIQUE(loginInter),
    UNIQUE(idProposition),
    UNIQUE(idCommentaire),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(idCommentaire) REFERENCES Commentaire(idCommentaire)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE,
+   FOREIGN KEY(idCommentaire) REFERENCES Commentaire(idCommentaire) ON DELETE CASCADE
 );
 
 CREATE TABLE A_pour_theme(
    idProposition INT,
    idTheme INT,
    PRIMARY KEY(idProposition, idTheme),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(idTheme) REFERENCES Theme(idTheme)
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE,
+   FOREIGN KEY(idTheme) REFERENCES Theme(idTheme) ON DELETE CASCADE
 );
 
 CREATE TABLE Fait_partie_de(
@@ -143,49 +143,49 @@ CREATE TABLE Fait_partie_de(
    loginInter VARCHAR(50) ,
    idRole INT,
    PRIMARY KEY(idGroupe, loginInter, idRole),
-   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idRole) REFERENCES Role(idRole)
+   FOREIGN KEY(idGroupe) REFERENCES Groupe(idGroupe) ON DELETE CASCADE,
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idRole) REFERENCES Role(idRole) ON DELETE CASCADE
 );
 
 CREATE TABLE A_pour_reaction(
    idProposition INT,
    idReaction INT,
    PRIMARY KEY(idProposition, idReaction),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction)
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE,
+   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction) ON DELETE CASCADE
 );
 
 CREATE TABLE Reagit(
    loginInter VARCHAR(50) ,
    idReaction INT,
    PRIMARY KEY(loginInter, idReaction),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idReaction) REFERENCES Reaction(idReaction) ON DELETE CASCADE
 );
 
 CREATE TABLE Concerne_la_notification(
    idProposition INT,
    idNotification INT,
    PRIMARY KEY(idProposition, idNotification),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification)
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE,
+   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification) ON DELETE CASCADE
 );
 
 CREATE TABLE Est_envoye_au_membre(
    loginInter VARCHAR(50) ,
    idNotification INT,
    PRIMARY KEY(loginInter, idNotification),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idNotification) REFERENCES Notification(idNotification) ON DELETE CASCADE
 );
 
 CREATE TABLE Propose(
    idProposition INT,
    loginInter VARCHAR(50) ,
    PRIMARY KEY(idProposition, loginInter),
-   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter)
+   FOREIGN KEY(idProposition) REFERENCES Proposition(idProposition) ON DELETE CASCADE,
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE
 );
 
 CREATE TABLE Vote(
@@ -193,6 +193,6 @@ CREATE TABLE Vote(
    idScrutin INT,
    valeurVote TINYINT NOT NULL,
    PRIMARY KEY(loginInter, idScrutin),
-   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter),
-   FOREIGN KEY(idScrutin) REFERENCES Scrutin(idScrutin)
+   FOREIGN KEY(loginInter) REFERENCES Internaute(loginInter) ON DELETE CASCADE,
+   FOREIGN KEY(idScrutin) REFERENCES Scrutin(idScrutin) ON DELETE CASCADE
 );
