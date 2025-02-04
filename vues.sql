@@ -99,11 +99,28 @@ SELECT
     p.popularite,
     p.idBudget,
     t.nomTheme,
-    b.limiteBudgetGlobal
+    b.limiteBudgetGlobal,
+    SUM(CASE WHEN v.valeurVote = 1 THEN 1 ELSE 0 END) AS Pour,
+    SUM(CASE WHEN v.valeurVote = -1 THEN 1 ELSE 0 END) AS Contre
 FROM Scrutin s
 JOIN Proposition p ON s.idProposition = p.idProposition
 JOIN Budget b ON p.idBudget = b.idBudget
 JOIN Groupe g ON b.idGroupe = g.idGroupe
 JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
 JOIN Theme t ON apt.idTheme = t.idTheme
+JOIN Vote v ON s.idScrutin = v.idScrutin
+GROUP BY
+    g.idGroupe,
+    s.idScrutin,
+    s.natureScrutin,
+    s.dureeScrutin,
+    s.dureeDiscussion,
+    s.resultatScrutin,
+    s.idProposition,
+    p.titreProposition,
+    p.descProposition,
+    p.popularite,
+    p.idBudget,
+    t.nomTheme,
+    b.limiteBudgetGlobal
 ORDER BY g.idGroupe, s.idScrutin DESC;
