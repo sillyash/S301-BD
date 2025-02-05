@@ -22,7 +22,7 @@ JOIN Groupe g ON b.idGroupe = g.idGroupe
 WHERE p.validee = TRUE;
 
 CREATE OR REPLACE VIEW GroupesUtilisateur AS
-SELECT FPD.loginInter, G.idGroupe, G.nomGroupe, R.nomRole 
+SELECT FPD.loginInter, G.idGroupe, G.nomGroupe, R.nomRole, R.idRole
 FROM Fait_partie_de FPD 
 INNER JOIN Groupe G ON FPD.idGroupe = G.idGroupe 
 INNER JOIN Role R ON FPD.idRole = R.idRole;
