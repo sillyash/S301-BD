@@ -3,26 +3,22 @@ SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.v
 FROM Proposition P
 ORDER BY P.idProposition DESC;
 
-/*CREATE OR REPLACE VIEW PropositionsPopulaires AS
-SELECT P.idProposition, P.titreProposition, P.descProposition, P.popularite, P.validee, P.idBudget
-FROM Proposition P
-ORDER BY P.popularite DESC;
-*/
-
 CREATE OR REPLACE VIEW PropositionsPopulaires AS
 SELECT p.idProposition, g.nomGroupe, t.nomTheme, p.titreProposition, p.descProposition, p.popularite
-FROM Groupe g
-JOIN Theme t ON g.idGroupe = t.idGroupe
-JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
-JOIN Proposition p ON apt.idProposition = p.idProposition
+FROM Proposition p
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+JOIN Budget b ON p.idBudget = b.idBudget
+JOIN Groupe g ON b.idGroupe = g.idGroupe
 ORDER BY p.popularite DESC;
 
 CREATE OR REPLACE VIEW PropositionsValidees AS
 SELECT p.idProposition, g.nomGroupe, t.nomTheme,p.titreProposition, p.descProposition, p.popularite AS Popularite, p.validee
-FROM Groupe g
-INNER JOIN Theme t ON g.idGroupe = t.idGroupe
-INNER JOIN A_pour_theme apt ON t.idTheme = apt.idTheme
-INNER JOIN Proposition p ON apt.idProposition = p.idProposition
+FROM Proposition p
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+JOIN Budget b ON p.idBudget = b.idBudget
+JOIN Groupe g ON b.idGroupe = g.idGroupe
 WHERE p.validee = TRUE;
 
 CREATE OR REPLACE VIEW GroupesUtilisateur AS
@@ -49,7 +45,7 @@ SELECT
     p.titreProposition,
     p.descProposition,
     p.popularite,
-    p.coutProposition,
+    p.coutProp AS cout,
     p.idBudget,
     t.nomTheme,
     g.idGroupe,
@@ -79,6 +75,7 @@ SELECT
     p.idProposition,
     p.titreProposition,
     p.descProposition,
+    p.coutProp AS cout,
     p.popularite,
     p.idBudget,
     t.nomTheme,
@@ -102,7 +99,7 @@ SELECT
     s.idProposition,
     p.titreProposition,
     p.descProposition,
-    p.coutProposition,
+    p.coutProp AS cout,
     p.popularite,
     p.idBudget,
     t.nomTheme,
