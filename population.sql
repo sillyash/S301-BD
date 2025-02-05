@@ -27,7 +27,8 @@ INSERT INTO Budget (limiteBudgetGlobal, titreBudget, idGroupe) VALUES
 INSERT INTO Role (nomRole) VALUES
 ('Membre'),
 ('Modérateur'),
-('Admin');
+('Admin'),
+('Décideur');
 
 -- Insertion des réactions
 INSERT INTO Reaction (typeReaction) VALUES
