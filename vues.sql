@@ -67,6 +67,7 @@ SELECT
     s.dureeDiscussion,
     s.resultatScrutin,
     b.limiteBudgetGlobal AS cout,
+    b.titreBudget,
     SUM(CASE WHEN v.valeurVote = 1 THEN 1 ELSE 0 END) AS Pour,
     SUM(CASE WHEN v.valeurVote = -1 THEN 1 ELSE 0 END) AS Contre
 FROM Proposition p
@@ -90,7 +91,8 @@ GROUP BY
     s.dureeScrutin,
     s.dureeDiscussion,
     s.resultatScrutin,
-    b.limiteBudgetGlobal
+    b.limiteBudgetGlobal,
+    b.titreBudget
 ORDER BY p.popularite DESC;
 
 CREATE OR REPLACE VIEW PropositionsGroupe AS
@@ -102,7 +104,8 @@ SELECT
     p.popularite,
     p.idBudget,
     t.nomTheme,
-    b.limiteBudgetGlobal
+    b.limiteBudgetGlobal,
+    b.titreBudget
 FROM Groupe g
 JOIN Budget b ON b.idGroupe = g.idGroupe
 JOIN Proposition p ON p.idBudget = b.idBudget
@@ -125,6 +128,7 @@ SELECT
     p.idBudget,
     t.nomTheme,
     b.limiteBudgetGlobal,
+    b.titreBudget,
     SUM(CASE WHEN v.valeurVote = 1 THEN 1 ELSE 0 END) AS Pour,
     SUM(CASE WHEN v.valeurVote = -1 THEN 1 ELSE 0 END) AS Contre
 FROM Scrutin s
@@ -147,5 +151,17 @@ GROUP BY
     p.popularite,
     p.idBudget,
     t.nomTheme,
-    b.limiteBudgetGlobal
+    b.limiteBudgetGlobal,
+    b.titreBudget
 ORDER BY g.idGroupe, s.idScrutin DESC;
+
+CREATE OR REPLACE VIEW BudgetsGroupe AS
+SELECT 
+    g.idGroupe,
+    b.idBudget,
+    b.limiteBudgetGlobal,
+    b.titreBudget
+FROM Groupe g
+JOIN Budget b ON b.idGroupe = g.idGroupe
+GROUP BY g.idGroupe, b.idBudget, b.limiteBudgetGlobal, b.titreBudget
+ORDER BY g.idGroupe, b.idBudget DESC;
