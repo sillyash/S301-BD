@@ -65,7 +65,7 @@ INSERT INTO A_pour_theme (idProposition, idTheme) VALUES
 (1, 1);
 
 INSERT INTO Fait_partie_de (idGroupe, loginInter, idRole) VALUES
-(1, 'jdoe', 1);
+(1, 'jdoe', 4);
 
 INSERT INTO A_pour_reaction (idProposition, idReaction) VALUES
 (1, 1);
