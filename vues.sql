@@ -122,22 +122,8 @@ JOIN Budget b ON p.idBudget = b.idBudget
 JOIN Groupe g ON b.idGroupe = g.idGroupe
 JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
 JOIN Theme t ON apt.idTheme = t.idTheme
-JOIN Vote v ON s.idScrutin = v.idScrutin
-GROUP BY
-    g.idGroupe,
-    s.idScrutin,
-    s.natureScrutin,
-    s.dureeScrutin,
-    s.dureeDiscussion,
-    s.resultatScrutin,
-    s.idProposition,
-    p.titreProposition,
-    p.descProposition,
-    p.popularite,
-    p.idBudget,
-    t.nomTheme,
-    b.limiteBudgetGlobal,
-    b.titreBudget
+LEFT JOIN Vote v ON s.idScrutin = v.idScrutin
+GROUP BY g.idGroupe
 ORDER BY g.idGroupe, s.idScrutin DESC;
 
 CREATE OR REPLACE VIEW BudgetsGroupe AS
