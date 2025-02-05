@@ -19,9 +19,9 @@ INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter,
 
 -- Insertion des budgets
 INSERT INTO Budget (limiteBudgetGlobal, idGroupe) VALUES
-(100000, 1),
-(150000, 2),
-(250000, 3);
+(100000, 'Energie', 1),
+(150000, 'Services Mairie', 2),
+(250000, 'Education', 3);
 
 -- Insertion des rôles
 INSERT INTO Role (nomRole) VALUES

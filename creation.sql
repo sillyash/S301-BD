@@ -50,6 +50,7 @@ CREATE TABLE Internaute(
 
 CREATE TABLE Budget(
    idBudget INT AUTO_INCREMENT,
+   titreBudget VARCHAR(50)  NOT NULL,
    limiteBudgetGlobal INT NOT NULL,
    idGroupe INT NOT NULL,
    PRIMARY KEY(idBudget),
