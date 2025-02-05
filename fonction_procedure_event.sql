@@ -72,3 +72,34 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
+
+-- 4. Procédure pour creer une proposition
+DELIMITER $$
+CREATE PROCEDURE CreerProposition(
+    IN titre VARCHAR(100),
+    IN description VARCHAR(255),
+    IN popularite INT,
+    IN idBudget INT,
+    IN coutProposition INT,
+    IN idTheme INT,
+    IN loginInter VARCHAR(50)
+)
+BEGIN
+    DECLARE propositionID INT;
+    
+    -- Créer la proposition
+    INSERT INTO Proposition (titreProposition, descProposition, dateProp, popularite, idBudget, coutProp, validee) 
+    VALUES (titre, description, CURRENT_TIMESTAMP, popularite, idBudget, coutProposition, 0);
+    
+    -- Récupérer l'ID de la proposition
+    SELECT LAST_INSERT_ID() INTO propositionID;
+    
+    -- Associer la proposition au thème
+    INSERT INTO A_pour_theme (idProposition, idTheme) 
+    VALUES (propositionID, idTheme);
+
+    -- Associer l'auteur à la proposition
+    INSERT INTO Propose (idProposition, loginInter)
+    VALUES (propositionID, loginInter);
+END $$
+DELIMITER ;
