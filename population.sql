@@ -18,7 +18,7 @@ INSERT INTO Internaute (loginInter, nomInter, prenomInter, emailInter, mdpInter,
 ('asmith', 'Smith', 'Alice', 'asmith@example.com', 'secure456', '456 Avenue Centrale', 1);
 
 -- Insertion des budgets
-INSERT INTO Budget (limiteBudgetGlobal, idGroupe) VALUES
+INSERT INTO Budget (limiteBudgetGlobal, titreBudget, idGroupe) VALUES
 (100000, 'Energie', 1),
 (150000, 'Services Mairie', 2),
 (250000, 'Education', 3);
