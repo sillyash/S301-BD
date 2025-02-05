@@ -52,10 +52,6 @@ INSERT INTO Commentaire (descCommentaire, dateCommentaire, loginInter, idProposi
 INSERT INTO Scrutin (dureeDiscussion, dureeScrutin, natureScrutin, resultatScrutin, idProposition) VALUES
 (10, 5, 'Vote majoritaire', 'En cours', 1);
 
--- Insertion des votes
-INSERT INTO Vote (loginInter, idScrutin, valeurVote) VALUES
-('jdoe', 1, 1);
-
 -- Insertion des signalements
 INSERT INTO Signalement (nbSignalements, loginInter, idProposition, idCommentaire) VALUES
 (1, 'asmith', 1, 1);
@@ -82,4 +78,4 @@ INSERT INTO Est_envoye_au_membre (loginInter, idNotification) VALUES
 INSERT INTO Propose (idProposition, loginInter) VALUES
 (1, 'jdoe'),
 (2, 'asmith'),
-(3, 'jdoe');
+(3, 'asmith');
