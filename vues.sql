@@ -127,3 +127,16 @@ FROM Groupe g
 JOIN Budget b ON b.idGroupe = g.idGroupe
 GROUP BY g.idGroupe, b.idBudget, b.limiteBudgetGlobal, b.titreBudget
 ORDER BY g.idGroupe, b.idBudget DESC;
+
+CREATE OR REPLACE VIEW ThemesGroupe AS
+SELECT 
+    g.idGroupe,
+    t.idTheme,
+    t.nomTheme
+FROM Groupe g
+JOIN Budget b ON b.idGroupe = g.idGroupe
+JOIN Proposition p ON p.idBudget = b.idBudget
+JOIN A_pour_theme apt ON p.idProposition = apt.idProposition
+JOIN Theme t ON apt.idTheme = t.idTheme
+GROUP BY g.idGroupe, t.idTheme, t.nomTheme
+ORDER BY g.idGroupe, t.idTheme DESC;
