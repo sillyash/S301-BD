@@ -78,7 +78,6 @@ DELIMITER $$
 CREATE PROCEDURE CreerProposition(
     IN titre VARCHAR(100),
     IN description VARCHAR(255),
-    IN popularite INT,
     IN idBudget INT,
     IN coutProposition INT,
     IN idTheme INT,
@@ -89,7 +88,7 @@ BEGIN
     
     -- Créer la proposition
     INSERT INTO Proposition (titreProposition, descProposition, dateProp, popularite, idBudget, coutProp, validee) 
-    VALUES (titre, description, CURRENT_TIMESTAMP, popularite, idBudget, coutProposition, 0);
+    VALUES (titre, description, CURRENT_TIMESTAMP, 0, idBudget, coutProposition, 0);
     
     -- Récupérer l'ID de la proposition
     SELECT LAST_INSERT_ID() INTO propositionID;
