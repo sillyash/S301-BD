@@ -43,20 +43,13 @@ INNER JOIN Groupe G ON FPD.idGroupe = G.idGroupe
 INNER JOIN Internaute I ON FPD.loginInter = I.loginInter 
 INNER JOIN Role R ON FPD.idRole = R.idRole;
 
-CREATE OR REPLACE VIEW BudgetsParThematique AS
-SELECT p.idProposition, g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal, SUM(p.popularite) AS PopulariteTotale
-FROM Groupe g
-INNER JOIN Theme t ON g.idGroupe = t.idGroupe
-INNER JOIN Proposition p ON p.idProposition = (SELECT idProposition FROM A_pour_theme WHERE idTheme = t.idTheme)
-INNER JOIN Budget b ON p.idBudget = b.idBudget
-GROUP BY g.nomGroupe, t.nomTheme, b.limiteBudgetGlobal;
-
 CREATE OR REPLACE VIEW PropositionsDetaillees AS
 SELECT 
     p.idProposition,
     p.titreProposition,
     p.descProposition,
     p.popularite,
+    p.coutProposition,
     p.idBudget,
     t.nomTheme,
     g.idGroupe,
@@ -66,7 +59,7 @@ SELECT
     s.dureeScrutin,
     s.dureeDiscussion,
     s.resultatScrutin,
-    b.limiteBudgetGlobal AS cout,
+    b.limiteBudgetGlobal,
     b.titreBudget,
     SUM(CASE WHEN v.valeurVote = 1 THEN 1 ELSE 0 END) AS Pour,
     SUM(CASE WHEN v.valeurVote = -1 THEN 1 ELSE 0 END) AS Contre
@@ -109,6 +102,7 @@ SELECT
     s.idProposition,
     p.titreProposition,
     p.descProposition,
+    p.coutProposition,
     p.popularite,
     p.idBudget,
     t.nomTheme,
